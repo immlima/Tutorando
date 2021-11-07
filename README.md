@@ -2,16 +2,21 @@
  Projeto para download em massa de imagens de cartas de magic, disponíveis no Scryfall.
 ![](https://i.ibb.co/CMH93vL/image.png)
 
+[TOC]
 
 ## Download
 [Clique aqui para fazer o Download](https://github.com/immlima/DownloadCards/releases/download/1.0/DownloadCards.V1.0.zip "Clique aqui para fazer o Download").
 
 ## Modos de download das cartas 
+
 Existe dois jeitos de realizar o download
 
 ### Individualmente
+
 Caixa de busca
+
 ![Caixa de busca](https://i.ibb.co/V9fwqf1/1.png)
+
 Em um desse formatos
 
 Formato 1  | Formato 2
@@ -36,7 +41,7 @@ etc... | etc...
 ## Cartas em Português ou English
 ![](https://i.ibb.co/k8pJbRp/3.png)
 
-###Português
+### Português
 Para realizar o download de Cartas em Português, precisa do nome dela em Português, sendo na Caixa de busca ou através do Download por Lista e selecionado **Português** na opção de Idiomas , porém cartas que não possui imagens com versão em português como [Ex.: Matrona da Abadia](https://scryfall.com/card/hml/2a/pt/matrona-da-abadia "Ex.: Matrona da Abadia"), ocorrerá o download da carta em [English](https://scryfall.com/card/hml/2a/abbey-matron "Abbey Matron").
 
 ### English
