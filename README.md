@@ -2,11 +2,6 @@
  Projeto para download em massa de imagens de cartas de magic, disponíveis no Scryfall.
 ![](https://i.ibb.co/CMH93vL/image.png)
 
-https://ibb.co/3dgRCg3
-https://ibb.co/ynKVFYp
-https://ibb.co/J7Nq6fN
-https://ibb.co/d2rZP1Y
-
 [TOC]
 
 
