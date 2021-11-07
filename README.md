@@ -2,8 +2,6 @@
  Projeto para download em massa de imagens de cartas de magic, disponíveis no Scryfall.
 ![](https://i.ibb.co/CMH93vL/image.png)
 
-[TOC]
-
 ## Download
 [Clique aqui para fazer o Download](https://github.com/immlima/DownloadCards/releases/download/1.0/DownloadCards.V1.0.zip "Clique aqui para fazer o Download").
 
