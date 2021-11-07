@@ -2,14 +2,14 @@
  Projeto para download em massa de imagens de cartas de magic, disponíveis no Scryfall.
 ![](https://i.ibb.co/CMH93vL/image.png)
 
-[TOC]
-
 
 ## Download
 [Clique aqui para fazer o Download](https://github.com/immlima/DownloadCards/releases/download/1.0/DownloadCards.V1.0.zip "Clique aqui para fazer o Download").
+
 ## Modos de download das cartas 
 Existe dois jeitos de realizar o download
-###Individualmente 
+
+### Individualmente
 Caixa de busca
 ![Caixa de busca](https://i.ibb.co/V9fwqf1/1.png)
 Em um desse formatos
@@ -17,7 +17,9 @@ Em um desse formatos
 Formato 1  | Formato 2
 ------------- | -------------
 4 Ancient Den  | Ancient Den
-###Lista
+
+
+### Lista
 ![Lista](https://i.ibb.co/7WXhn8m/4.png)
 
 Selecionando uma lista .txt
