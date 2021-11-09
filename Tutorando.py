@@ -1,18 +1,31 @@
-#import filecmp
 import os
 import time
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk 
 import requests
 import simplejson as json
+import webbrowser
+
+#|---Verificaçao da versao ---|
+version=str(1.0)
+def versao():
+    url="https://api.github.com/repos/immlima/Tutorando/releases/latest"
+    v = requests.get(url)
+
+    if v.status_code == requests.codes.OK:
+        git_info=json.loads(v.text)
+        if version!=git_info["tag_name"]:
+            r=messagebox.askyesno("Versão disponível", "Nova versão está disponível para download.\n\nDeseja baixar a nova atualização?")
+            if r==True:
+                webbrowser.open('https://github.com/immlima/Tutorando/releases', new=2)
+
 
 window = Tk() 
-
-window.title("MTG Download de cards")
+window.title("Tutorando | Download de cartas de Magic")
 window.iconphoto(TRUE, PhotoImage(file=os.path.join(os.path.abspath("."),os.path.join("Data","B.png"))))
 window.resizable(FALSE,FALSE)
 
-FramePrincipal = LabelFrame(window, text="MTG Download imagens cards : ")
+FramePrincipal = LabelFrame(window, text="Download de cartas de Magic: ")
 FramePrincipal.grid(row=0, column=0, sticky=W, padx=5, pady=5)
 
 def baixar_arquivo(url, endereço):
@@ -21,19 +34,18 @@ def baixar_arquivo(url, endereço):
         novo_arquivo.write(reposta.content)
 namedeck=""
 
-Frame_entry = LabelFrame(FramePrincipal, text="Preencha com uma card avulsa ou selecione uma lista: ", padx=5, pady=5)
+Frame_entry = LabelFrame(FramePrincipal, text="Preencha com uma carta ou selecione uma lista: ", padx=5, pady=5)
 
 Entry1=Entry(Frame_entry, text="",bd=3, width=60)
 Entry1.delete ( 0, last=999 )
 Entry1.grid(row=0, column=1, sticky=NW, pady=2)
-#Button(Frame_entry, text = " X ", command=Entry1.delete(0, 99)).grid(row=0, column=2, padx=5) 
 
 Frame_entry.grid(row=0, column=0,columnspan=3, sticky=NW, padx=5, pady=5)
 
 def Procurando_lista():
     global End_file_deck
     global namedeck
-    End_file_deck = filedialog.askopenfilename(title = "Selecione uma Lista", filetype = (("MTGO Deck", "*.txt"),("All Files", "*.*")))
+    End_file_deck = filedialog.askopenfilename(title = "Selecione uma Lista", filetype = (("Lista de MTG", "*.txt"),("Todos os arquivos", "*.*")))
     namedeck=os.path.splitext(os.path.basename(open(End_file_deck).name))[0]
     Entry1.delete ( 0, last=999 )
     Entry1.insert (0, "Lista: "+namedeck )
@@ -93,8 +105,6 @@ ss.select()
 ss.grid(row=1, column=0, sticky=NW, padx=15)
 
 flag_EN=False
-
-
 var2 = StringVar()
 
 def menu2():
@@ -116,18 +126,14 @@ times_anterrior=0
 def single(card_deck,End_folder_img):
     global times_anterrior
     if card_deck[0:2]=="": 
-        #print(card_deck[0:2])
         return 0
     if card_deck[0:1].isnumeric(): 
         card_deck = card_deck.split(" ", 1)
         card_deck[1]=card_deck[1].split('\n')
         card_deck[0]=card_deck[1][0]
-        #print(card_deck)
     else:
         card_deck = card_deck.split("\n", 1)
-        #print(card_deck)
     
-    #print(card_deck[0])
     def sub_Basic_land(nome_da_carta):
         basicos = {
             "Planicie": "Plains",
@@ -140,32 +146,18 @@ def single(card_deck,End_folder_img):
         return basicos.get(nome_da_carta, nome_da_carta)
     url="https://api.scryfall.com/cards/named?fuzzy="+sub_Basic_land(card_deck[0].replace(":"," "))
 
-    #print(url)
     r = requests.get(url)
-    #print(r.status_code)
 
     if r.status_code == requests.codes.OK:
-        """print(card_deck[0])
-        print(time.process_time_ns())
-        print(times_anterrior)
-        print("75000000")
-        print(time.process_time_ns()-times_anterrior)"""
         if time.process_time_ns()-times_anterrior<75000000:
             time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 50ms Rate Limits and Good Citizenship
-            """print("Delay: "+str((time.process_time_ns()-times_anterrior)/1000000000))
-        print("\n")"""
         times_anterrior=time.process_time_ns()
-        #global flag_EN
         card_json=json.loads(r.text)
         if card_json['image_status'] != "highres_scan" and card_json['lang']!="en": 
             if (card_json['image_status'] != "lowres" or card_json['lang']!="pt") or flag_EN:
                 single(card_json['name'],End_folder_img)
                 return 0        
                 
-        """print (card_json['name'])
-        print (card_json['image_status'])
-        print (card_json['lang'])
-        print ("\n")"""
         if card_json['layout'] == "transform":
             img_card=card_json["card_faces"]
             img_card=img_card[0]
@@ -219,7 +211,7 @@ def single(card_deck,End_folder_img):
                 name_card =os.path.join(End_folder_img,name_card)
                 baixar_arquivo(img_card, name_card)
     else:
-        messagebox.showinfo("MTG Download cards", "Card não encontrado: "+card_deck[0])
+        messagebox.showinfo("Tutorando | Download de cartas de Magic", "Card não encontrado: "+card_deck[0])
 
 def lista(End_folder_img):
     file_deck = open(End_file_deck, encoding='utf8')
@@ -234,20 +226,16 @@ def lista(End_folder_img):
     Button(top, text='Cancelar', command=top.destroy).place(x=160, y=110, width=65)
             
     for line_deck in file_deck:  
-        #print(str(count)+"/"+str(quantaslines))
         tt=str(count)+"/"+str(quantaslines)
         counter.set(count)
         count += 1
         card_deck =line_deck
-        #print(card_deck)
         if card_deck[0:1].isnumeric(): 
             card_deck = card_deck.split(" ", 1)
             card_deck[1]=card_deck[1].split('\n')
             card_deck[0]=card_deck[1][0]
-            #print(card_deck)
         else:
             card_deck = card_deck.split("\n", 1)
-            #print(card_deck)
         
         a=Label(top, text="                                                                                          " ,bd=3)
         a.place(x=10, y=25)
@@ -263,13 +251,12 @@ def lista(End_folder_img):
         single(card_deck[0],End_folder_img)
     global namedeck
     top.destroy()
-    messagebox.showinfo("MTG Download de cards", "Concluído o Download: "+namedeck)
+    messagebox.showinfo("Tutorando | Download de cartas de Magic", "Concluído o Download: "+namedeck)
 
 def save_img_card():
     if Entry1.get() != '':
         End_folder_img = filedialog.askdirectory(title = "Escolha um diretório para salvar os cards")
         if End_folder_img!='' :
-            #entrada=Entry1.get()
             if Entry1.get()[0:7]=='Lista: ':
                 lista(End_folder_img)
             else:
@@ -293,7 +280,7 @@ def save_img_card():
                 top.update()
                 top.destroy()
     else:
-        messagebox.showinfo("MTG Download de cards", "Selecione uma lista ou preencha uma card avulsa.")
+        messagebox.showinfo("Tutorando | Download de cartas de Magic", "Preencha com uma card ou selecione uma lista")
 
 def buttonFramePrincipal(event=None):
     if Entry1.get() != "" :
@@ -328,4 +315,5 @@ b1.grid(row=0, column=3, padx=5)
 Button(Frame_entry, text = " ? ", anchor="e" , command=exemplo).grid(row=0, column=4, padx=5)                   
 Button(FramePrincipal, text = "Baixar Cartas", command=save_img_card, width=10).grid(row=6, column=2, sticky=NW, padx=5, pady=5)
 b1.bind('<Return>',buttonFramePrincipal)
+versao()
 window.mainloop()

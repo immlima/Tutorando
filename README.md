@@ -1,19 +1,19 @@
-# DownloadCards
+# Tutorando | Download de cartas de Magic
  Projeto para download em massa de imagens de cartas de magic, disponíveis no Scryfall.
-![](https://i.ibb.co/CMH93vL/image.png)
+![](https://i.ibb.co/1KM4V1R/image.png)
 
 ## Download
-[Clique aqui para fazer o Download](https://github.com/immlima/DownloadCards/releases/download/1.0/DownloadCards.V1.0.zip "Clique aqui para fazer o Download").
+[Clique aqui para fazer o Download](https://github.com/immlima/Tutorando/releases/download/1.0/Tutorando.V1.0.zip "Clique aqui para fazer o Download").
 
-## Modos de download das cartas 
+## Modos de download das cartas
 
-Existe dois jeitos de realizar o download
+Existe duas maneiras de realizar o download
 
 ### Individualmente
 
 Caixa de busca
 
-![Caixa de busca](https://i.ibb.co/V9fwqf1/1.png)
+![Caixa de busca](https://i.ibb.co/DfZQtyD/1.png)
 
 Em um desse formatos
 
@@ -21,9 +21,8 @@ Formato 1  | Formato 2
 ------------- | -------------
 4 Ancient Den  | Ancient Den
 
-
 ### Lista
-![Lista](https://i.ibb.co/7WXhn8m/4.png)
+![Lista](https://i.ibb.co/T8sYHhK/3.png)
 
 Selecionando uma lista .txt
 
@@ -37,11 +36,11 @@ Formato 1  | Formato 2
 2 Arcbound Ravager | Arcbound Ravager
 4 Welding Jar | Welding Jar
 4 Ornithopter | Ornithopter
-etc... | etc... 
+etc... | etc...
 
 ## Cartas em Português ou English
 
-![](https://i.ibb.co/k8pJbRp/3.png)
+![](https://i.ibb.co/d7fmb6t/2.png)
 
 ### Português
 
@@ -57,4 +56,4 @@ Para realizar o download de Cartas em Português, precisa do nome dela em Portug
 
 ## Dúvidas ou Sugestões
 
-[Se você possui uma Dúvida ou Sugestão, não deixe de criar um tópico no nosso Issues.](https://github.com/immlima/DownloadCards/issues "Se você possui uma Dúvida ou Sugestão, não deixe de criar um tópico no nosso Issues.")
+[Se você possui uma Dúvida ou Sugestão, não deixe de criar um tópico no nosso Issues.](https://github.com/immlima/Tutorando/issues "Se você possui uma Dúvida ou Sugestão, não deixe de criar um tópico no nosso Issues.")
