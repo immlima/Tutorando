@@ -1,9 +1,9 @@
 # Tutorando | Download de cartas de Magic
  Projeto para download em massa de imagens de cartas de magic, disponíveis no Scryfall.
-![](https://i.ibb.co/1KM4V1R/image.png)
+![](https://i.ibb.co/vkytXWf/image.png)
 
 ## Download
-[Clique aqui para fazer o Download](https://github.com/immlima/Tutorando/releases/download/1.0/Tutorando.V1.0.zip "Clique aqui para fazer o Download").
+[Clique aqui para fazer o Download](https://github.com/immlima/Tutorando/releases/download/1.0.1/Tutorando.v1.0.1.zip "Clique aqui para fazer o Download").
 
 ## Modos de download das cartas
 
@@ -13,7 +13,7 @@ Existe duas maneiras de realizar o download
 
 Caixa de busca
 
-![Caixa de busca](https://i.ibb.co/DfZQtyD/1.png)
+![Caixa de busca](https://i.ibb.co/Fn2CffQ/1.png)
 
 Em um desse formatos
 
@@ -22,7 +22,7 @@ Formato 1  | Formato 2
 4 Ancient Den  | Ancient Den
 
 ### Lista
-![Lista](https://i.ibb.co/T8sYHhK/3.png)
+![Lista](https://i.ibb.co/8P4PPMf/3.png)
 
 Selecionando uma lista .txt
 
@@ -40,15 +40,15 @@ etc... | etc...
 
 ## Cartas em Português ou English
 
-![](https://i.ibb.co/d7fmb6t/2.png)
+![](https://i.ibb.co/4m8dFVP/2.png)
 
 ### Português
 
-Para realizar o download de Cartas em Português, precisa do nome dela em Português, sendo na Caixa de busca ou através do Download por Lista e selecionado **Português** na opção de Idiomas , porém cartas que não possui imagens com versão em português como [Ex.: Matrona da Abadia](https://scryfall.com/card/hml/2a/pt/matrona-da-abadia "Ex.: Matrona da Abadia"), ocorrerá o download da carta em [English](https://scryfall.com/card/hml/2a/abbey-matron "Abbey Matron").
+Para realizar o download de Cartas em Português, basta introduzir na Caixa de busca ou através do Download por Lista e selecionar **Português** na opção de Idiomas , porém cartas que não possui imagens com versão em português como [Ex.: Matrona da Abadia](https://scryfall.com/card/hml/2a/pt/matrona-da-abadia "Ex.: Matrona da Abadia"), ocorrerá o download da carta em [English](https://scryfall.com/card/hml/2a/abbey-matron "Abbey Matron"). É sugerido utilizar uma lista com cartas em Português. 
 
 ### English
 
- Para realizar o download de Cartas em English, basta introduzir na Caixa de busca ou através do Download por Lista e selecionado **English** na opção de Idiomas. Diferente da opção **Português**, na opção **English** o idioma do nome da carta não altera o resultado final.
+ Para realizar o download de Cartas em English, basta introduzir na Caixa de busca ou através do Download por Lista e selecionar **English** na opção de Idiomas
 
 ## Qualidade das cartas em Português
 

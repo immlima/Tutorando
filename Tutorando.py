@@ -7,17 +7,17 @@ import simplejson as json
 import webbrowser
 
 #|---Verificaçao da versao ---|
-version=str(1.0)
+version="1.0.1"
 def versao():
     url="https://api.github.com/repos/immlima/Tutorando/releases/latest"
     v = requests.get(url)
 
     if v.status_code == requests.codes.OK:
         git_info=json.loads(v.text)
-        if version!=git_info["tag_name"]:
+        if version!=str(git_info["tag_name"]):
             r=messagebox.askyesno("Versão disponível", "Nova versão está disponível para download.\n\nDeseja baixar a nova atualização?")
             if r==True:
-                webbrowser.open('https://github.com/immlima/Tutorando/releases', new=2)
+                webbrowser.open('https://github.com/immlima/Tutorando', new=2)
 
 
 window = Tk() 
@@ -93,7 +93,7 @@ def menu():
     li.grid(row=2, column=1, sticky=NW, padx=5, pady=5, rowspan=3)
 
 labelframe1 = LabelFrame(FramePrincipal, text="Modelo: ")
-labelframe1.grid(row=2, column=2, sticky=NW, padx=5, pady=5)
+labelframe1.grid(row=2, column=2, sticky=NW, pady=5)
 
 Radiobutton(labelframe1, text="Pequeno", variable=var, value="small", command=menu ).grid(row=2, column=0, sticky=NW, padx=15)
 Radiobutton(labelframe1, text="Médio", variable=var, value="normal", command=menu).grid(row=3, column=0, sticky=NW, padx=15)
@@ -104,7 +104,7 @@ ss=Radiobutton(labelframe1, text="Png", variable=var, value="png", command=menu)
 ss.select()
 ss.grid(row=1, column=0, sticky=NW, padx=15)
 
-flag_EN=False
+flag_EN=True
 var2 = StringVar()
 
 def menu2():
@@ -113,7 +113,7 @@ def menu2():
         flag_EN=True
     else:
         flag_EN=False
-labelframe2 = LabelFrame(FramePrincipal, text="Prioriza cartas no idioma: ")
+labelframe2 = LabelFrame(FramePrincipal, text="Idioma: ")
 labelframe2.grid(row=3, column=2, sticky=NW, pady=5)
 
 Radiobutton(labelframe2, text="Português", variable=var2, value="pt", command=menu2).grid(row=1, column=0, sticky=NW, padx=15)
@@ -149,14 +149,39 @@ def single(card_deck,End_folder_img):
     r = requests.get(url)
 
     if r.status_code == requests.codes.OK:
-        if time.process_time_ns()-times_anterrior<75000000:
-            time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 50ms Rate Limits and Good Citizenship
+        if time.process_time_ns()-times_anterrior<100000000:
+            time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 100ms Rate Limits and Good Citizenship
+
         times_anterrior=time.process_time_ns()
         card_json=json.loads(r.text)
-        if card_json['image_status'] != "highres_scan" and card_json['lang']!="en": 
-            if (card_json['image_status'] != "lowres" or card_json['lang']!="pt") or flag_EN:
+        global flag_EN
+
+        if flag_EN==True:
+            if card_json['lang']!="en":
                 single(card_json['name'],End_folder_img)
-                return 0        
+                return 0
+        else:
+            if card_json['lang']=="en":
+                url="https://api.scryfall.com/cards/"+card_json['set']+"/"+card_json['collector_number']+"/pt"
+                r = requests.get(url)
+                if r.status_code == requests.codes.OK:
+                    if time.process_time_ns()-times_anterrior<100000000:
+                        time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 100ms Rate Limits and Good Citizenship
+
+                    times_anterrior=time.process_time_ns()
+                    if r.status_code == requests.codes.OK:
+                        card_json=json.loads(r.text)
+
+            if card_json['image_status'] != "highres_scan" and card_json['image_status'] != "lowres": 
+                url="https://api.scryfall.com/cards/named?fuzzy="+card_json['name'].replace(":"," ")
+                r = requests.get(url)
+                if r.status_code == requests.codes.OK:
+                    if time.process_time_ns()-times_anterrior<100000000:
+                        time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 100ms Rate Limits and Good Citizenship
+
+                    times_anterrior=time.process_time_ns()
+                    card_json=json.loads(r.text)
+   
                 
         if card_json['layout'] == "transform":
             img_card=card_json["card_faces"]
@@ -314,6 +339,6 @@ b1=Button(Frame_entry, text = "🔻", anchor="e" , command=buttonFramePrincipal)
 b1.grid(row=0, column=3, padx=5)                   
 Button(Frame_entry, text = " ? ", anchor="e" , command=exemplo).grid(row=0, column=4, padx=5)                   
 Button(FramePrincipal, text = "Baixar Cartas", command=save_img_card, width=10).grid(row=6, column=2, sticky=NW, padx=5, pady=5)
-b1.bind('<Return>',buttonFramePrincipal)
 versao()
+window.bind('<Return>',buttonFramePrincipal)
 window.mainloop()
