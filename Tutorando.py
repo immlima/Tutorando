@@ -2,15 +2,19 @@ import os
 import time
 from tkinter import *
 from tkinter import filedialog, messagebox, ttk 
-import requests
-import simplejson as json
 import webbrowser
+import requests
+import json
 
 #|---Verificaçao da versao ---|
-version="1.0.1"
+
+caminho = os.path.abspath(".")
+
+version="1.0.2"
+
 def versao():
     url="https://api.github.com/repos/immlima/Tutorando/releases/latest"
-    v = requests.get(url)
+    v = requests.get(url, timeout=None)
 
     if v.status_code == requests.codes.OK:
         git_info=json.loads(v.text)
@@ -22,16 +26,17 @@ def versao():
 
 window = Tk() 
 window.title("Tutorando | Download de cartas de Magic")
-window.iconphoto(TRUE, PhotoImage(file=os.path.join(os.path.abspath("."),os.path.join("Data","B.png"))))
+window.iconphoto(TRUE, PhotoImage(file=os.path.join(caminho,os.path.join("Data","B.png"))))
 window.resizable(FALSE,FALSE)
 
 FramePrincipal = LabelFrame(window, text="Download de cartas de Magic: ")
 FramePrincipal.grid(row=0, column=0, sticky=W, padx=5, pady=5)
 
 def baixar_arquivo(url, endereço):
-    reposta= requests.get(url)
-    with open(endereço,'wb') as novo_arquivo:
-        novo_arquivo.write(reposta.content)
+    reposta= requests.get(url, timeout=None)
+    if reposta.status_code == requests.codes.OK:
+        with open(endereço,'wb') as novo_arquivo:
+            novo_arquivo.write(reposta.content)
 namedeck=""
 
 Frame_entry = LabelFrame(FramePrincipal, text="Preencha com uma carta ou selecione uma lista: ", padx=5, pady=5)
@@ -56,7 +61,7 @@ var = StringVar()
 cond = StringVar()
 cond = "png"
 Label(FramePrincipal, text ="   745 x 1040 png  ", anchor="e").grid(row=5, column=1, sticky=N, padx=5, pady=5)
-excard=PhotoImage(file =os.path.join(os.path.abspath("."),os.path.join("Data","png.png")) ).subsample(2, 2)
+excard=PhotoImage(file =os.path.join(caminho,os.path.join("Data","png.png")) ).subsample(2, 2)
 li=Label(FramePrincipal,image=excard)
 li.excard = excard
 li.grid(row=2, column=1, sticky=NW, padx=5, pady=5, rowspan=3)
@@ -67,27 +72,27 @@ def menu():
     if cond=="small":
         li.grid_forget()
         Label(FramePrincipal, text ="   146 x 204 jpg   ", anchor="e").grid(row=5, column=1, sticky=N, padx=5, pady=5)
-        excard=PhotoImage(file = os.path.join(os.path.abspath("."),os.path.join("Data","png.png"))).subsample(2, 2)
+        excard=PhotoImage(file = os.path.join(caminho,os.path.join("Data","png.png"))).subsample(2, 2)
     if cond=="normal":
         li.grid_forget()
         Label(FramePrincipal, text ="   488 x 680 jpg   ", anchor="e").grid(row=5, column=1, sticky=N, padx=5, pady=5)
-        excard=PhotoImage(file = os.path.join(os.path.abspath("."),os.path.join("Data","png.png"))).subsample(2, 2)
+        excard=PhotoImage(file = os.path.join(caminho,os.path.join("Data","png.png"))).subsample(2, 2)
     if cond=="large": 
         li.grid_forget()
         Label(FramePrincipal, text ="   672 x 936 jpg   ", anchor="e").grid(row=5, column=1, sticky=N, padx=5, pady=5)
-        excard=PhotoImage(file = os.path.join(os.path.abspath("."),os.path.join("Data","png.png"))).subsample(2, 2)
+        excard=PhotoImage(file = os.path.join(caminho,os.path.join("Data","png.png"))).subsample(2, 2)
     if cond=="png":
         li.grid_forget()
         Label(FramePrincipal, text ="   745 x 1040 png   ", anchor="e").grid(row=5, column=1, sticky=N, padx=5, pady=5)
-        excard=PhotoImage(file = os.path.join(os.path.abspath("."),os.path.join("Data","png.png"))).subsample(2, 2)
+        excard=PhotoImage(file = os.path.join(caminho,os.path.join("Data","png.png"))).subsample(2, 2)
     if cond=="art_crop":
         li.grid_forget()
         Label(FramePrincipal, text ="          Arte          ", anchor="e").grid(row=5, column=1, sticky=N, padx=5, pady=5)
-        excard=PhotoImage(file = os.path.join(os.path.abspath("."),os.path.join("Data","art_crop.png"))).subsample(2, 2)
+        excard=PhotoImage(file = os.path.join(caminho,os.path.join("Data","art_crop.png"))).subsample(2, 2)
     if cond=="border_crop":
         li.grid_forget()
         Label(FramePrincipal, text ="   480 x 680 jpg   ", anchor="e").grid(row=5, column=1, sticky=N, padx=5, pady=5)
-        excard=PhotoImage(file = os.path.join(os.path.abspath("."),os.path.join("Data","border_crop.png"))).subsample(2, 2)
+        excard=PhotoImage(file = os.path.join(caminho,os.path.join("Data","border_crop.png"))).subsample(2, 2)
     li=Label(FramePrincipal,image=excard)
     li.excard = excard
     li.grid(row=2, column=1, sticky=NW, padx=5, pady=5, rowspan=3)
@@ -121,10 +126,9 @@ ss2=Radiobutton(labelframe2, text="English", variable=var2, value="en", command=
 ss2.select()
 ss2.grid(row=0, column=0, sticky=NW, padx=15)
 
-
-times_anterrior=0
+times_times_anterior=time.time_ns()
 def single(card_deck,End_folder_img):
-    global times_anterrior
+    global times_times_anterior
     if card_deck[0:2]=="": 
         return 0
     if card_deck[0:1].isnumeric(): 
@@ -145,45 +149,81 @@ def single(card_deck,End_folder_img):
         }
         return basicos.get(nome_da_carta, nome_da_carta)
     url="https://api.scryfall.com/cards/named?fuzzy="+sub_Basic_land(card_deck[0].replace(":"," "))
+    
+    def rq(url):
+        global times_times_anterior
+        
+        r = requests.get(url, timeout=None)
+        
+        if time.time_ns()-times_times_anterior<100000000:
+            time.sleep((time.time_ns()-times_times_anterior)/1000000000)  #https://scryfall.com/docs/api  delay 100ms Rate Limits and Good Citizenship
+        times_times_anterior=time.time_ns()
+        #print(r.status_code)
+        return r
+    r=rq(url)
+    card_json=json.loads(r.text)    
+    global flag_EN
+    if flag_EN==True: #tag em English
+        if card_json['lang']!="en": # PT -> EN
+            single(card_json['name'],End_folder_img)
+            return 0
+    else: #tag em Portugues
+        if card_json['object']=="card":
+            if card_json['lang']=="en": # EN -> PT
 
-    r = requests.get(url)
-
-    if r.status_code == requests.codes.OK:
-        if time.process_time_ns()-times_anterrior<100000000:
-            time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 100ms Rate Limits and Good Citizenship
-
-        times_anterrior=time.process_time_ns()
-        card_json=json.loads(r.text)
-        global flag_EN
-
-        if flag_EN==True:
-            if card_json['lang']!="en":
-                single(card_json['name'],End_folder_img)
-                return 0
-        else:
-            if card_json['lang']=="en":
                 url="https://api.scryfall.com/cards/"+card_json['set']+"/"+card_json['collector_number']+"/pt"
-                r = requests.get(url)
-                if r.status_code == requests.codes.OK:
-                    if time.process_time_ns()-times_anterrior<100000000:
-                        time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 100ms Rate Limits and Good Citizenship
-
-                    times_anterrior=time.process_time_ns()
+                r=rq(url)
+                if r.status_code != requests.codes.OK:
+                    #print("procurando versao pt")
+                    url =f"https://api.scryfall.com/cards/search?order=released&q=oracleid%3A{ card_json['oracle_id'] }&unique=prints"
+                    r=rq(url)
                     if r.status_code == requests.codes.OK:
-                        card_json=json.loads(r.text)
+                        info_card_prints=json.loads(r.text)
+                        for cards_english in info_card_prints['data']:
+                            
+                            url="https://api.scryfall.com/cards/"+cards_english['set']+"/"+cards_english['collector_number']+"/pt"
+                            r=rq(url)
 
+                            if r.status_code == requests.codes.OK:
+                                break
+                        else:
+                            #print(card_json)
+                            url="https://api.scryfall.com/cards/named?fuzzy="+sub_Basic_land(card_json["name"].replace(":"," "))
+                            r=rq(url)
+                card_json=json.loads(r.text)
+                #print(card_json)
+                
+        if card_json['object']=="card": #NOT highres_scan and NOT lowres
             if card_json['image_status'] != "highres_scan" and card_json['image_status'] != "lowres": 
                 url="https://api.scryfall.com/cards/named?fuzzy="+card_json['name'].replace(":"," ")
-                r = requests.get(url)
-                if r.status_code == requests.codes.OK:
-                    if time.process_time_ns()-times_anterrior<100000000:
-                        time.sleep((time.process_time_ns()-times_anterrior)/1000000000)  #https://scryfall.com/docs/api  delay 100ms Rate Limits and Good Citizenship
+                r=rq(url)
+                card_json=json.loads(r.text)
 
-                    times_anterrior=time.process_time_ns()
-                    card_json=json.loads(r.text)
-   
-                
-        if card_json['layout'] == "transform":
+    print(card_json["name"])
+
+    if card_json['layout'] == "transform":
+        img_card=card_json["card_faces"]
+        img_card=img_card[0]
+        img_card=img_card["image_uris"]
+        img_card=img_card[cond]
+        if cond == "png":
+            name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].png"
+        else:
+            name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].jpg"                        
+        name_card =os.path.join(End_folder_img,name_card)
+        baixar_arquivo(img_card, name_card)
+        img_card=card_json["card_faces"]
+        img_card=img_card[1]
+        img_card=img_card["image_uris"]
+        img_card=img_card[cond]         
+        if cond == "png":
+            name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Transform ["+cond+"].png"
+        else:
+            name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Transform ["+cond+"].jpg"
+        name_card =os.path.join(End_folder_img,name_card)
+        baixar_arquivo(img_card, name_card)
+    else:
+        if card_json['layout'] == "modal_dfc":
             img_card=card_json["card_faces"]
             img_card=img_card[0]
             img_card=img_card["image_uris"]
@@ -191,52 +231,28 @@ def single(card_deck,End_folder_img):
             if cond == "png":
                 name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].png"
             else:
-                name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].jpg"                        
+                name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].jpg"
             name_card =os.path.join(End_folder_img,name_card)
             baixar_arquivo(img_card, name_card)
             img_card=card_json["card_faces"]
             img_card=img_card[1]
             img_card=img_card["image_uris"]
-            img_card=img_card[cond]         
+            img_card=img_card[cond]
             if cond == "png":
-                name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Transform ["+cond+"].png"
+                name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Modal ["+cond+"].png"
             else:
-                name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Transform ["+cond+"].jpg"
+                name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Modal ["+cond+"].jpg"
             name_card =os.path.join(End_folder_img,name_card)
             baixar_arquivo(img_card, name_card)
         else:
-            if card_json['layout'] == "modal_dfc":
-                img_card=card_json["card_faces"]
-                img_card=img_card[0]
-                img_card=img_card["image_uris"]
-                img_card=img_card[cond]
-                if cond == "png":
-                    name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].png"
-                else:
-                    name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].jpg"
-                name_card =os.path.join(End_folder_img,name_card)
-                baixar_arquivo(img_card, name_card)
-                img_card=card_json["card_faces"]
-                img_card=img_card[1]
-                img_card=img_card["image_uris"]
-                img_card=img_card[cond]
-                if cond == "png":
-                    name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Modal ["+cond+"].png"
-                else:
-                    name_card=card_json['name'].replace("/"," ").replace(":"," ") +"-Modal ["+cond+"].jpg"
-                name_card =os.path.join(End_folder_img,name_card)
-                baixar_arquivo(img_card, name_card)
+            img_card=card_json["image_uris"]
+            img_card=img_card[cond]
+            if cond == "png":
+                name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].png"
             else:
-                img_card=card_json["image_uris"]
-                img_card=img_card[cond]
-                if cond == "png":
-                    name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].png"
-                else:
-                    name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].jpg"
-                name_card =os.path.join(End_folder_img,name_card)
-                baixar_arquivo(img_card, name_card)
-    else:
-        messagebox.showinfo("Tutorando | Download de cartas de Magic", "Card não encontrado: "+card_deck[0])
+                name_card=card_json['name'].replace("/"," ").replace(":"," ") +" ["+cond+"].jpg"
+            name_card =os.path.join(End_folder_img,name_card)
+            baixar_arquivo(img_card, name_card)
 
 def lista(End_folder_img):
     file_deck = open(End_file_deck, encoding='utf8')
@@ -283,6 +299,7 @@ def save_img_card():
         End_folder_img = filedialog.askdirectory(title = "Escolha um diretório para salvar os cards")
         if End_folder_img!='' :
             if Entry1.get()[0:7]=='Lista: ':
+                #print(End_folder_img)
                 lista(End_folder_img)
             else:
                 top=Toplevel()
