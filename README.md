@@ -1,11 +1,11 @@
 # Tutorando | Download de cartas de Magic
 
  Projeto para download em massa de imagens de cartas de magic, disponíveis no Scryfall.
-![Tutorando | Download de cartas de Magic](https://i.imgur.com/PQkMmgh.png)
+![Tutorando | Download de cartas de Magic](https://i.imgur.com/ndeXS2i.png)
 
 ## Download
 
-[Clique aqui para fazer o Download](https://github.com/immlima/Tutorando/releases/download/1.0.2/Tutorando.v1.0.2.zip "Clique aqui para fazer o Download").
+[Clique aqui para fazer o Download](https://github.com/immlima/Tutorando/releases/download/1.1.0/Tutorando.v1.1.0.zip "Clique aqui para fazer o Download").
 
 ## Modos de download das cartas
 
@@ -15,7 +15,7 @@ Existe duas maneiras de realizar o download
 
 Caixa de busca
 
-![Caixa de busca](https://i.imgur.com/fFT5EYT.png)
+![Caixa de busca](https://i.imgur.com/zfGYs7A.png)
 
 Em um desse formatos
 
@@ -25,7 +25,7 @@ Formato 1  | Formato 2
 
 ### Lista
 
-![Lista](https://i.imgur.com/hmW9yT5.png)
+![Lista](https://i.imgur.com/SdhlfVE.png)
 
 Selecionando uma lista .txt
 
@@ -43,7 +43,7 @@ etc... | etc...
 
 ## Cartas em Português ou English
 
-![Cartas em Português ou English](https://i.imgur.com/7eEPvXo.png)
+![Cartas em Português ou English](https://i.imgur.com/5AYfZ4U.png)
 
 ### Português
 

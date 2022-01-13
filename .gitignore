@@ -1,11 +1,10 @@
-
-config.json
-Tutorando.exe
-__pycache__/Tutorando.cpython-38.pyc
-auto-py-to-exe.json
-exe/readme md.py
-exe/zip.py
-pyinstaller.txt
-exe/test time.py
-workspace.code-workspace
-__pycache__/Tutorando.cpython-310.pyc
+exe/
+dist/
+build/
+__pycache__/
+*.json
+*.txt
+*.code-workspace
+*.spec
+*.zip
+*.pyc
