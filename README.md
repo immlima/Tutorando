@@ -47,14 +47,14 @@ etc... | etc... | etc...
 
 Entre as opções de Modelo podemos encontrar:
 
-Modelo  | Dimensões  | Extensão do arquivo
-------------- | -------------
-Png | 745 x 1040 | .png
-Pequeno | 146 x 204 | .jpg
-Médio | 488 x 680 | .jpg
-Grande | 672 x 936 | .jpg
-Borda cortada | 480 x 680 | .jpg
-Arte destacada | -- | .jpg
+Modelo | Dimensões | Extensão do arquivo
+------------- | -------------| -------------
+Png |745 x 1040|.png
+Pequeno |146 x 204 |.jpg
+Médio |488 x 680 |.jpg
+Grande |672 x 936 |.jpg
+Borda cortada |480 x 680 |.jpg
+Arte destacada |--|.jpg
 
 ## Idioma -  Cartas em Português ou English
 
